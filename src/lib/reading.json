@@ -2,25 +2,25 @@
   {
     "title": "Book 1",
     "author": "Author 1",
-    "image": "/images/Frieren_Beyond_Journey's_End.jpg",
+    "image": "images/Frieren_Beyond_Journey's_End.jpg",
     "description": "This book explores..."
   },
   {
     "title": "Book 2",
     "author": "Author 2",
-    "image": "/images/Frieren_Beyond_Journey's_End.jpg",
+    "image": "images/Frieren_Beyond_Journey's_End.jpg",
     "description": "In this book, I..."
   },
   {
     "title": "Book 3",
     "author": "Author 3",
-    "image": "/images/Frieren_Beyond_Journey's_End.jpg",
+    "image": "images/Frieren_Beyond_Journey's_End.jpg",
     "description": "In this book, I..."
   },
   {
     "title": "Book 4",
     "author": "Author 4",
-    "image": "/images/Frieren_Beyond_Journey's_End.jpg",
+    "image": "images/Frieren_Beyond_Journey's_End.jpg",
     "description": "In this book, I..."
   }
 ]

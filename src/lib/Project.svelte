@@ -11,7 +11,7 @@
 </article>
 
 <style>
-  .projects {
+  :global(.projects) {
     display: grid;
     gap: 1em;
     grid-template-columns: repeat(auto-fill, minmax(15em, 1fr));
