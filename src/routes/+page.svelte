@@ -1,3 +1,10 @@
+<script>
+  import projects from "$lib/projects.json";
+  import Project from "$lib/Project.svelte";
+  import reading from "$lib/reading.json";
+  import ReadingItem from "$lib/ReadingItem.svelte";
+</script>
+
 <nav class="nav">
   <ol>
     <li class="nav"><a class="current" href="./">Home</a></li>
@@ -17,3 +24,19 @@
   Digital Experience Data Insights Team.
   <img src="images/drinking boba.jpg" alt="Unyimeabasi Usua" width="600" />
 </p>
+
+<h2>Projects</h2>
+
+<div class="projects">
+  {#each projects.slice(0, 3) as p}
+    <Project data={p} />
+  {/each}
+</div>
+
+<h2>What I'm Reading</h2>
+
+<div class="reading">
+  {#each reading.slice(0, 3) as r}
+    <ReadingItem data={r} />
+  {/each}
+</div>
