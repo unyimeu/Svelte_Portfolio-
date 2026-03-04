@@ -1,22 +1,22 @@
 [
   {
     "title": "My First Project",
-    "image": "/images/travel_and_chat.png",
+    "image": "/Svelte_Portfolio/images/travel_and_chat.png",
     "description": "This project explores..."
   },
   {
     "title": "My Second Project",
-    "image": "/images/travel_and_chat.png",
+    "image": "/Svelte_Portfolio/images/travel_and_chat.png",
     "description": "In this project, I..."
   },
   {
     "title": "My Third Project",
-    "image": "/images/travel_and_chat.png",
+    "image": "/Svelte_Portfolio/images/travel_and_chat.png",
     "description": "In this project, I..."
   },
   {
     "title": "My Fourth Project",
-    "image": "/images/travel_and_chat.png",
+    "image": "/Svelte_Portfolio/images/travel_and_chat.png",
     "description": "In this project, I..."
   }
 ]
