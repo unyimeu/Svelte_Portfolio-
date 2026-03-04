@@ -22,22 +22,6 @@ li{
   display: contents;
 }
 
-nav {
-  display: flex;
-  margin-bottom: 1em;
-  border-bottom-width: 1px;
-  border-bottom-style: solid;
-  border-bottom-color: oklch(80% 3% 200);
-  
-}
-
-nav a {
-  flex: 1;
-  text-decoration: none;
-  color: inherit;
-  text-align: center;
-  padding: 3em;
-}
 
 a{
   color: inherit;

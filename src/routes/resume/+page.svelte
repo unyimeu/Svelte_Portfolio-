@@ -2,17 +2,6 @@
   <title>Resume</title>
 </svelte:head>
 
-<nav class="nav">
-  <ol>
-    <li class="nav"><a href="../">Home</a></li>
-    <li class="nav"><a href="../projects">Projects</a></li>
-    <li class="nav"><a href="../contact">Contact</a></li>
-    <li class="nav">
-      <a href="https://github.com/unyimeu" target="_blank">GitHub Profile</a>
-    </li>
-    <li class="nav"><a class="current" href="./">Resume</a></li>
-  </ol>
-</nav>
 <h1>Resume</h1>
 <section class="education">
   <header><h2>Education</h2></header>
