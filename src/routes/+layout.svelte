@@ -9,7 +9,30 @@
     { url: "/contact", title: "Contact" },
     { url: "https://github.com/unyimeu", title: "Github" },
   ];
+
+  let colorScheme = "light dark";
+
+  let localStorage = globalThis.localStorage ?? {};
+
+  if (localStorage.colorScheme) {
+    // if localStorage has a colorScheme property
+    colorScheme = localStorage.colorScheme; // override the default colorScheme
+  }
+
+  let root = globalThis.document?.documentElement;
+  $: root?.style.setProperty("color-scheme", colorScheme);
+  $: localStorage.colorScheme = colorScheme;
+
 </script>
+
+<label class="color-scheme-switch">
+  Theme:
+  <select bind:value={colorScheme}>
+    <option value="light dark">Automatic</option>
+    <option value="light">Light</option>
+    <option value="dark">Dark</option>
+  </select>
+</label>
 
 <nav class="nav">
   {#each pages as p}
@@ -41,5 +64,35 @@
     color: inherit;
     text-align: center;
     padding: 3em;
+  }
+
+  :root {
+    color-scheme: light dark;
+  }
+
+  nav {
+    --border-color: oklch(50% 10% 200 / 40%);
+    border-bottom: 2px solid var(--border-color);
+  }
+
+  .current {
+    border-bottom: 4px solid var(--border-color);
+  }
+
+  nav a:hover {
+    background-color: color-mix(in oklch, var(--color-accent), canvas 85%);
+  }
+
+  label,
+  .color-scheme-switch {
+    position: absolute;
+    top: 1em;
+    right: 1em;
+  }
+
+  .color-scheme-switch {
+    display: inline-flex;
+    gap: 4px;
+    font-size: 80%;
   }
 </style>
