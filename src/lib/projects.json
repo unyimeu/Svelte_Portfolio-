@@ -36,7 +36,7 @@
   },
   {
     "title": "Anime Opening Song Decade Atlas",
-    "image": "/Svelte_Portfolio-/images/Edo-Image.png",
+    "image": "/Svelte_Portfolio-/images/anime_opening.png",
     "description": "A data visualization charting the evolution of anime opening themes from the 1970s to the 2020s, analyzing genre, tempo, and lyrical themes.",
     "year": "2025",
     "story": "In this project, I scraped and analyzed audio features from over 1,500 anime OPs using Spotify's API and manual tagging. The result is a scrollable timeline that shows exactly when J-pop took over from orchestral scores, and when lo-fi crept in."
@@ -57,7 +57,7 @@
   },
   {
     "title": "Japanese War Diary Translation Project",
-    "image": "/Svelte_Portfolio-/images/Edo-Image.png",
+    "image": "/Svelte_Portfolio-/images/war_diary.png",
     "description": "A collaborative humanities project digitizing and translating personal diaries from WWII-era Japan, preserving civilian and soldier perspectives.",
     "year": "2023",
     "story": "In this project, I partnered with a small team of translators and historians to digitize fragile wartime diaries donated by Japanese families. We built a platform for crowdsourced translation review, ensuring accuracy while honoring the humanity behind each entry."
