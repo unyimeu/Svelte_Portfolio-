@@ -7,6 +7,7 @@
     { url: "/projects", title: "Projects" },
     { url: "/resume", title: "Resume" },
     { url: "/contact", title: "Contact" },
+    { url: "/meta", title: "Meta" },
     { url: "https://github.com/unyimeu", title: "Github" },
   ];
 
@@ -22,7 +23,6 @@
   let root = globalThis.document?.documentElement;
   $: root?.style.setProperty("color-scheme", colorScheme);
   $: localStorage.colorScheme = colorScheme;
-
 </script>
 
 <label class="color-scheme-switch">
