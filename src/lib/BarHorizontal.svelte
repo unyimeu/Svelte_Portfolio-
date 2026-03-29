@@ -2,12 +2,13 @@
   import * as d3 from "d3";
 
   let width = 600;
-  let height = 400;
+  let height = 200;
   let xAxis, yAxis;
 
   export let data = [];
+  export let title = "";
 
-  let margin = { top: 40, right: 150, bottom: 60, left: 100 };
+  let margin = { top: 40, right: 130, bottom: 60, left: 100 };
   let innerWidth = width - margin.left - margin.right;
   let innerHeight = height - margin.top - margin.bottom;
 
@@ -30,7 +31,14 @@
   $: maxBar = d3.greatest(data, (d) => d.value);
 
   $: if (xAxis && yAxis) {
-    d3.select(xAxis).call(d3.axisBottom(xScale));
+    d3.select(xAxis).call(
+      d3.axisBottom(xScale).ticks(
+        Math.min(
+          d3.max(data, (d) => d.value),
+          10,
+        ),
+      ),
+    );
     d3.select(yAxis).call(d3.axisLeft(yScale));
   }
 </script>
@@ -43,7 +51,7 @@
       text-anchor="middle"
       class="chart-title"
     >
-      Lines of Code by Language
+      {title}
     </text>
 
     <g
@@ -73,19 +81,19 @@
           stroke-width="2"
         />
         <!-- leader line -->
-        <line
+        <!-- <line
           x1={xScale(maxBar.value)}
           y1={yScale(maxBar.label) + yScale.bandwidth() / 2}
           x2={xScale(maxBar.value) + 30}
           y2={yScale(maxBar.label) + yScale.bandwidth() / 2}
           stroke="currentColor"
           stroke-width="1"
-        />
+        /> -->
         <!-- annotation text -->
         <text
           x={xScale(maxBar.value) + 35}
           y={yScale(maxBar.label) + yScale.bandwidth() / 2}
-          dominant-baseline="middle"
+          dominant-baseline="start"
           class="annotation"
         >
           Most lines of code
@@ -157,18 +165,18 @@
   }
 
   .chart-title {
-    font-size: 1em;
+    font-size: 0.9em;
     font-weight: bold;
     fill: currentColor;
   }
 
   .axis-label {
-    font-size: 0.8em;
+    font-size: 0.7em;
     fill: currentColor;
   }
 
   .annotation {
-    font-size: 0.7em;
+    font-size: 0.6em;
     fill: black;
     font-style: italic;
   }

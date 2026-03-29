@@ -41,7 +41,6 @@
 {:else if error}
   <p>Something went wrong: {error.message}</p>
 {:else}
-  <!-- The data is {JSON.stringify(githubData)} -->
   <section>
     <h2>My GitHub Stats</h2>
     <dl>
