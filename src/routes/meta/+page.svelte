@@ -32,7 +32,7 @@
         let { author, date, time, timezone, datetime } = first;
         let ret = {
           id: commit,
-          url: "https://github.com/vis-society/lab-7/commit/" + commit,
+          url: "https://github.com/unyimeu/Svelte_Portfolio-/commit/" + commit,
           author,
           date,
           time,
