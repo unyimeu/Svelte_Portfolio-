@@ -16,8 +16,6 @@
 
   let commits = [];
   onMount(async () => {
-    commits = d3.sort(commits, (d) => -d.totalLines);
-
     locData = await d3.csv(`${base}/loc.csv`, (row) => ({
       ...row,
       line: Number(row.line),
@@ -47,6 +45,8 @@
 
         return ret;
       });
+
+    commits = d3.sort(commits, (d) => -d.totalLines);
   });
 
   let width = 1000,
@@ -152,8 +152,6 @@
   }));
 
   export let title = "";
-
-  
 </script>
 
 <svelte:head>
