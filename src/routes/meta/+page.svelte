@@ -6,15 +6,8 @@
   import { computePosition, autoPlacement, offset } from "@floating-ui/dom";
 
   let locData = [];
-  // $: barData = d3
-  //   .rollups(
-  //     locData,
-  //     (v) => v.length,
-  //     (d) => d.type,
-  //   )
-  //   .map(([type, count]) => ({ label: type, value: count }));
-
   let commits = [];
+
   onMount(async () => {
     locData = await d3.csv(`${base}/loc.csv`, (row) => ({
       ...row,
@@ -152,6 +145,26 @@
   }));
 
   export let title = "";
+  let svg;
+  $: {
+    d3.select(svg).call(
+      d3
+        .brush()
+        .extent([
+          [usableArea.left, usableArea.top],
+          [usableArea.right, usableArea.bottom],
+        ])
+        .on("start brush end", brushed),
+    );
+
+    d3.select(svg).selectAll(".dots, .overlay ~ *").raise();
+  }
+
+  $: brushSelection = null;
+
+  function brushed(evt) {
+    brushSelection = evt.selection;
+  }
 </script>
 
 <svelte:head>
@@ -162,7 +175,7 @@
 
 <p>Meta page to visualize project data.</p>
 <h3>Commits by Time of Day</h3>
-<svg viewBox="0 0 {width} {height}">
+<svg viewBox="0 0 {width} {height} " bind:this={svg}>
   <g transform="translate(0, {usableArea.bottom})" bind:this={xAxis} />
   <g
     class="gridlines"
@@ -296,5 +309,19 @@
 
   .selected {
     fill: var(--color-accent);
+  }
+
+  @keyframes marching-ants {
+    to {
+      stroke-dashoffset: -8; /* 5 + 3 */
+    }
+  }
+
+  svg :global(.selection) {
+    fill-opacity: 10%;
+    stroke: black;
+    stroke-opacity: 70%;
+    stroke-dasharray: 5 3;
+    animation: marching-ants 2s linear infinite;
   }
 </style>
