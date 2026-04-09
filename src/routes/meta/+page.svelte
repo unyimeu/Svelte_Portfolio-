@@ -3,6 +3,7 @@
   import { onMount } from "svelte";
   import * as d3 from "d3";
   import BarHorizontal from "$lib/BarHorizontal.svelte";
+  import LineChart from "$lib/LineChart.svelte";
   import { computePosition, autoPlacement, offset } from "@floating-ui/dom";
 
   let locData = [];
@@ -126,9 +127,26 @@
 
   let clickedCommits = [];
 
+  function isCommitBrushed(commit) {
+    if (!brushSelection) {
+      return false;
+    }
+    let min = { x: brushSelection[0][0], y: brushSelection[0][1] };
+    let max = { x: brushSelection[1][0], y: brushSelection[1][1] };
+    let x = xScale(commit.date);
+    let y = yScale(commit.hourFrac);
+    return x >= min.x && x <= max.x && y >= min.y && y <= max.y;
+  }
+
+  $: brushedCommits = brushSelection ? commits.filter(isCommitBrushed) : [];
+
+  $: selectedCommits = Array.from(
+    new Set([...clickedCommits, ...brushedCommits]),
+  );
+
   $: selectedLines =
-    clickedCommits.length > 0
-      ? clickedCommits.flatMap((d) => d.lines)
+    selectedCommits.length > 0
+      ? selectedCommits.flatMap((d) => d.lines)
       : locData;
 
   $: selectedCounts = d3.rollup(
@@ -165,6 +183,30 @@
   function brushed(evt) {
     brushSelection = evt.selection;
   }
+
+  let linesByDate = [];
+
+  $: {
+    // 1. Get the count for each date in the data
+    const rolled = d3
+      .rollups(
+        locData,
+        (v) => v.length,
+        (d) => d3.timeDay.floor(d.datetime),
+      )
+      .map(([date, count]) => ({ date, count }));
+
+    // 2. Get an array of all days covered by the data
+    const [minDate, maxDate] = d3.extent(rolled, (d) => d.date);
+    const allDays = d3.timeDays(minDate, d3.timeDay.offset(maxDate, 1));
+
+    // 3. Build linesByDate by filling all undefined dates with 0 counts
+    linesByDate = allDays.map((date) => ({
+      date,
+      count:
+        rolled.find((d) => d.date.getTime() === date.getTime())?.count ?? 0,
+    }));
+  }
 </script>
 
 <svelte:head>
@@ -188,7 +230,7 @@
   <g class="dots">
     {#each commits as commit, index}
       <circle
-        class:selected={clickedCommits.includes(commit)}
+        class:selected={selectedCommits.includes(commit)}
         on:click={(evt) => dotInteraction(index, evt)}
         on:mouseenter={(evt) => dotInteraction(index, evt)}
         on:mouseleave={(evt) => dotInteraction(index, evt)}
@@ -227,10 +269,11 @@
 
 <BarHorizontal
   data={barData}
-  title={clickedCommits.length > 0
-    ? "Lines of Code: Selected Commits"
+  title={selectedCommits.length > 0
+    ? `Lines of Code: ${selectedCommits.length} Selected Commits`
     : "Lines of Code: Website Breakdown"}
 />
+<LineChart data={linesByDate} />
 
 <!-- <dl class="stats">
   <dt>Total <abbr title="Lines of code">LOC</abbr></dt>
