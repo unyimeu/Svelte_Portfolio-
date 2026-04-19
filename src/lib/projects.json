@@ -4,6 +4,7 @@
     "image": "/Svelte_Portfolio-/images/Edo-Image.png",
     "description": "An interactive map recreating daily life in 1800s Edo (Tokyo), drawing from historical woodblock prints and merchant records.",
     "year": "2023",
+    "url":"",
     "story": "In this project, I dove deep into ukiyo-e art and Tokugawa-era census data to reconstruct the bustling merchant districts of old Edo. I built a zoomable, clickable city map where users can explore life as a samurai, merchant, or craftsman."
   },
   {
@@ -11,6 +12,7 @@
     "image": "/Svelte_Portfolio-/images/Manga-Sentiment.png",
     "description": "A machine learning tool that analyzes emotional arcs across manga chapters using panel layout, typography, and translation data.",
     "year": "2024",
+    "url": "",
     "story": "In this project, I trained a computer vision model on thousands of scanned manga panels to detect emotional tone — from the frantic speed lines of a shonen battle to the quiet stillness of a slice-of-life moment. The results were surprisingly nuanced."
   },
   {
@@ -18,6 +20,7 @@
     "image": "/Svelte_Portfolio-/images/kanji-genes.jpg",
     "description": "A visual web app tracing the etymological roots of over 2,000 kanji characters, from ancient Chinese oracle bones to modern Japanese usage.",
     "year": "2022",
+    "url": "",
     "story": "In this project, I became obsessed with how a single brushstroke from 3,000 years ago could evolve into the characters on a Tokyo subway sign today. I built an interactive tree where each node is a living character with its full ancestral history."
   },
   {
@@ -25,6 +28,7 @@
     "image": "/Svelte_Portfolio-/images/Edo-Image.png",
     "description": "A curated database mapping real Japanese locations to their fictional Ghibli counterparts, complete with cinematography notes and travel guides.",
     "year": "2024",
+    "url": "",
     "story": "In this project, I spent months cross-referencing production artwork, director interviews, and geography to pinpoint the real hillsides, train stations, and coastlines that inspired iconic Ghibli scenes. Users can toggle between film stills and real photos."
   },
   {
@@ -32,6 +36,7 @@
     "image": "/Svelte_Portfolio-/images/Edo-Image.png",
     "description": "An interactive study guide on Bushido philosophy, comparing historical texts like Hagakure with modern interpretations in anime and pop culture.",
     "year": "2023",
+    "url": "",
     "story": "In this project, I explored how the code of the samurai has been romanticized, distorted, and reimagined across centuries — from Yamamoto Tsunetomo's original writings to Rurouni Kenshin. I built a side-by-side text comparison tool for students and enthusiasts."
   },
   {
@@ -39,6 +44,7 @@
     "image": "/Svelte_Portfolio-/images/anime_opening.png",
     "description": "A data visualization charting the evolution of anime opening themes from the 1970s to the 2020s, analyzing genre, tempo, and lyrical themes.",
     "year": "2025",
+    "url": "",
     "story": "In this project, I scraped and analyzed audio features from over 1,500 anime OPs using Spotify's API and manual tagging. The result is a scrollable timeline that shows exactly when J-pop took over from orchestral scores, and when lo-fi crept in."
   },
   {
@@ -46,6 +52,7 @@
     "image": "/Svelte_Portfolio-/images/Edo-Image.png",
     "description": "A searchable, annotated archive of primary sources from Japan's modernization era (1868–1912), translated and contextualized for English-speaking researchers.",
     "year": "2022",
+    "url": "",
     "story": "In this project, I worked with public domain documents — imperial edicts, newspaper clippings, and diplomatic cables — to build a research tool that lets historians filter by theme, date, and political faction. It filled a real gap in English-language resources."
   },
   {
@@ -53,6 +60,7 @@
     "image": "/Svelte_Portfolio-/images/Edo-Image.png",
     "description": "A mobile-first encyclopedia of Japanese folklore creatures, cross-referencing classical illustrations with their appearances in modern manga and games.",
     "year": "2024",
+    "url": "",
     "story": "In this project, I catalogued over 300 yokai from Toriyama Sekien's 18th-century woodblock books and traced each one forward through Gegege no Kitaro, Pokémon, and beyond. The app lets you search by region, power type, or media appearance."
   },
   {
@@ -60,13 +68,15 @@
     "image": "/Svelte_Portfolio-/images/war_diary.png",
     "description": "A collaborative humanities project digitizing and translating personal diaries from WWII-era Japan, preserving civilian and soldier perspectives.",
     "year": "2023",
+    "url": "",
     "story": "In this project, I partnered with a small team of translators and historians to digitize fragile wartime diaries donated by Japanese families. We built a platform for crowdsourced translation review, ensuring accuracy while honoring the humanity behind each entry."
   },
   {
-    "title": "Shonen Power Scaling Database",
-    "image": "/Svelte_Portfolio-/images/Edo-Image.png",
-    "description": "A tongue-in-cheek but meticulously sourced database ranking power levels across major shonen franchises using in-universe feats and author statements.",
-    "year": "2025",
+    "title": "Bike Wathing Project",
+    "image": "/Svelte_Portfolio-/images/bike-watch.png",
+    "description": "Lab 9 Geospatial Visualization of Boston bike watching data.",
+    "year": "2026",
+    "url": "https://unyimeu.github.io/Lab09-Repository/",
     "story": "In this project, I combined my love of Dragon Ball, Naruto, and One Piece with a surprisingly rigorous data modeling exercise. Every entry cites a specific chapter, episode, or databook. Debates in the comments section are, predictably, still ongoing."
   }
 ]
