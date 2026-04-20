@@ -4,6 +4,8 @@
   let width = 400;
   let height = 300;
   let xAxis, yAxis;
+  let selectedIndex = -1;
+  let liveText = "";
 
   export let data = [];
 
@@ -23,8 +25,9 @@
     .range([innerHeight, 0]);
 
   $: colorScale = d3
-    .scaleOrdinal(d3.schemeTableau10)
-    .domain(data.map((d) => d.label));
+    .scaleOrdinal()
+    .domain(data.map((d) => d.label))
+    .range(d3.quantize(d3.interpolateBlues, data.length));
 
   $: maxBar = d3.greatest(data, (d) => d.value);
 
@@ -37,95 +40,156 @@
         .tickValues(d3.range(0, d3.max(data, (d) => d.value) + 1)),
     );
   }
+
+  function toggleBar(index, event) {
+    if (!event.key || event.key === "Enter") {
+      selectedIndex = index;
+      const d = data[index];
+      liveText = `${d.label}: ${d.value} projects selected.`;
+    }
+  }
+
+  $: description = `A bar chart showing project counts by year. ${data.map((d) => `${d.label}: ${d.value} projects`).join(", ")}.`;
+  let showChart = true;
+
+  function toggleView() {
+    showChart = !showChart;
+    liveText = showChart ? "Bar chart view shown." : "Table view shown.";
+  }
 </script>
 
-<div class="container">
-  <svg viewBox="0 0 {width} {height}">
-    <text
-      x={margin.left + innerWidth / 2}
-      y={margin.top / 2}
-      text-anchor="middle"
-      class="chart-title"
+<button
+  on:click={toggleView}
+  aria-pressed={!showChart}
+  aria-label="Toggle between bar chart and table view"
+  class="toggle-button"
+>
+  {showChart ? "Show Table" : "Show Chart"}
+</button>
+
+{#if showChart}
+  <div class="container">
+    <svg
+      viewBox="0 0 {width} {height}"
+      role="img"
+      aria-labelledby="bar-title bar-desc"
     >
-      Projects per Year
-    </text>
+      <title id="bar-title">Projects by Year</title>
+      <desc id="bar-desc">{description}</desc>
+      <p aria-live="polite" class="sr-only">{liveText}</p>
 
-    <g
-      transform="translate({margin.left}, {margin.top + innerHeight})"
-      bind:this={xAxis}
-    />
-    <g transform="translate({margin.left}, {margin.top})" bind:this={yAxis} />
-    <g transform="translate({margin.left}, {margin.top})">
-      {#each data as d}
-        <rect
-          x={xScale(d.label)}
-          y={yScale(d.value)}
-          width={xScale.bandwidth()}
-          height={innerHeight - yScale(d.value)}
-          fill={colorScale(d.label)}
-        />
-      {/each}
-      {#if maxBar}
-        <!-- highlight outline around the tallest bar -->
-        <rect
-          x={xScale(maxBar.label)}
-          y={yScale(maxBar.value)}
-          width={xScale.bandwidth()}
-          height={innerHeight - yScale(maxBar.value)}
-          fill="none"
-          stroke="currentColor"
-          stroke-width="2"
-        />
-        <!-- leader line -->
-        <line
-          x1={xScale(maxBar.label) + xScale.bandwidth()}
-          y1={yScale(maxBar.value) + (innerHeight - yScale(maxBar.value)) / 2}
-          x2={xScale(maxBar.label) + xScale.bandwidth() + 100}
-          y2={yScale(maxBar.value) + (innerHeight - yScale(maxBar.value)) / 2}
-          stroke="currentColor"
-          stroke-width="1"
-        />
-        <!-- annotation text at end of leader line -->
+      <text
+        x={margin.left + innerWidth / 2}
+        y={margin.top / 2}
+        text-anchor="middle"
+        class="chart-title"
+      >
+        Projects per Year
+      </text>
+
+      <g
+        transform="translate({margin.left}, {margin.top + innerHeight})"
+        bind:this={xAxis}
+      />
+      <g transform="translate({margin.left}, {margin.top})" bind:this={yAxis} />
+      <g transform="translate({margin.left}, {margin.top})">
+        {#each data as d, index}
+          <rect
+            x={xScale(d.label)}
+            y={yScale(d.value)}
+            width={xScale.bandwidth()}
+            height={innerHeight - yScale(d.value)}
+            fill={colorScale(d.label)}
+            opacity={selectedIndex === -1 || selectedIndex === index ? 1 : 0.45}
+            on:click={(e) => toggleBar(index, e)}
+            on:keyup={(e) => toggleBar(index, e)}
+            tabindex="0"
+            role="button"
+            aria-label={`Select bar for ${d.label}`}
+            stroke="black"
+          />
+        {/each}
+
+        {#if maxBar}
+          <!-- highlight outline around the tallest bar -->
+          <rect
+            x={xScale(maxBar.label)}
+            y={yScale(maxBar.value)}
+            width={xScale.bandwidth()}
+            height={innerHeight - yScale(maxBar.value)}
+            fill="none"
+            stroke="currentColor"
+            stroke-width="2"
+          />
+          <!-- leader line -->
+          <line
+            x1={xScale(maxBar.label) + xScale.bandwidth()}
+            y1={yScale(maxBar.value) + (innerHeight - yScale(maxBar.value)) / 2}
+            x2={xScale(maxBar.label) + xScale.bandwidth() + 100}
+            y2={yScale(maxBar.value) + (innerHeight - yScale(maxBar.value)) / 2}
+            stroke="currentColor"
+            stroke-width="1"
+          />
+          <!-- annotation text at end of leader line -->
+          <text
+            x={xScale(maxBar.label) + xScale.bandwidth() + 110}
+            y={yScale(maxBar.value) + (innerHeight - yScale(maxBar.value)) / 2}
+            dominant-baseline="middle"
+            class="annotation"
+          >
+            Year with most projects
+          </text>
+        {/if}
+        <!-- x-axis label -->
         <text
-          x={xScale(maxBar.label) + xScale.bandwidth() + 110}
-          y={yScale(maxBar.value) + (innerHeight - yScale(maxBar.value)) / 2}
-          dominant-baseline="middle"
-          class="annotation"
+          x={innerWidth / 2}
+          y={innerHeight + margin.bottom + 10}
+          text-anchor="middle"
+          class="axis-label"
         >
-          Year with most projects
+          Year
         </text>
-      {/if}
-      <!-- x-axis label -->
-      <text
-        x={innerWidth / 2}
-        y={innerHeight + margin.bottom + 10}
-        text-anchor="middle"
-        class="axis-label"
-      >
-        Year
-      </text>
 
-      <!-- y-axis label -->
-      <text
-        x={-(innerHeight / 2)}
-        y={-margin.left + 30}
-        text-anchor="middle"
-        transform="rotate(-90)"
-        class="axis-label"
-      >
-        Number of Projects
-      </text>
-    </g>
-  </svg>
-  <ul class="legend">
-    {#each data as d}
-      <li style="--color: {colorScale(d.label)}">
-        <span class="swatch"></span>
-        {d.label} <em>({d.value})</em>
-      </li>
-    {/each}
-  </ul>
-</div>
+        <!-- y-axis label -->
+        <text
+          x={-(innerHeight / 2)}
+          y={-margin.left + 30}
+          text-anchor="middle"
+          transform="rotate(-90)"
+          class="axis-label"
+        >
+          Number of Projects
+        </text>
+      </g>
+    </svg>
+    <ul class="legend">
+      {#each data as d}
+        <li style="--color: {colorScale(d.label)}">
+          <span class="swatch"></span>
+          {d.label} <em>({d.value})</em>
+        </li>
+      {/each}
+    </ul>
+  </div>
+{:else}
+  <table aria-label="Table showing project counts by year" class="data-table">
+    <caption>Projects by Year</caption>
+    <thead>
+      <tr>
+        <th id="year-header" scope="col">Year</th>
+        <th id="projects-header" scope="col">Projects</th>
+      </tr>
+    </thead>
+    <tbody>
+      {#each data as d, i}
+        <tr>
+          <th id="row-{i}" scope="row">{d.label}</th>
+          <td aria-labelledby="row-{i} projects-header">{d.value}</td>
+        </tr>
+      {/each}
+    </tbody>
+  </table>
+{/if}
 
 <style>
   svg {
@@ -176,5 +240,62 @@
     font-size: 0.7em;
     fill: black;
     font-style: italic;
+  }
+
+  rect {
+    transition: 300ms;
+    outline: none;
+  }
+  svg:hover rect:not(:hover),
+  .container:focus-within rect:not(:focus-visible) {
+    opacity: 20%;
+  }
+  rect:focus-visible {
+    stroke: black;
+    stroke-width: 2px;
+    stroke-dasharray: 4;
+  }
+
+  .sr-only {
+    position: absolute;
+    left: -9999px;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+  }
+
+  .data-table {
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+    border-collapse: collapse;
+    width: 100%;
+    max-width: 30em;
+  }
+
+  .data-table caption {
+    font-weight: bold;
+    margin-bottom: 0.5em;
+    text-align: left;
+  }
+
+  .data-table th,
+  .data-table td {
+    border: 1px solid #ccc;
+    padding: 0.5em;
+    text-align: left;
+  }
+
+  .data-table th {
+    background-color: #f0f0f0;
+  }
+  rect {
+    stroke: black;
+    stroke-width: 1;
+  }
+
+  rect:focus-visible {
+    stroke: yellow;
+    stroke-width: 6px;
+    stroke-dasharray: 10; /* Adjust the dash length as needed */
   }
 </style>
