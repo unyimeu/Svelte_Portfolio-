@@ -76,7 +76,6 @@
     >
       <title id="bar-title">Projects by Year</title>
       <desc id="bar-desc">{description}</desc>
-      <p aria-live="polite" class="sr-only">{liveText}</p>
 
       <text
         x={margin.left + innerWidth / 2}
@@ -162,6 +161,8 @@
         </text>
       </g>
     </svg>
+    <p aria-live="polite" class="sr-only">{liveText}</p>
+
     <ul class="legend">
       {#each data as d}
         <li style="--color: {colorScale(d.label)}">
